@@ -1,10 +1,7 @@
 import React, {Component} from 'react';
-import {
-  KeyboardAvoidingView,
-  Text,
-  TextInput,
-  TouchableOpacity,
-} from 'react-native';
+import {KeyboardAvoidingView, View, StyleSheet} from 'react-native';
+import LoginButton from '../components/buttons/login-button';
+import FormTextInput from '../components/forms/form-text-input';
 
 class LoginScreen extends Component {
   constructor(props) {
@@ -25,32 +22,38 @@ class LoginScreen extends Component {
   };
 
   render() {
-    const {email, password} = this.state;
-
     return (
       <KeyboardAvoidingView>
-        <Text>Log in</Text>
-        <TextInput
-          onChangeText={this.onChangeEmail}
-          value={email}
-          placeholder="Email"
-          autoCompleteType="email"
-          keyboardType="email-address"
-          autoCapitalize="none"
-        />
-        <TextInput
-          onChangeText={this.onChangePassword}
-          value={password}
-          placeholder="Password"
-          secureTextEntry={true}
-          autoCapitalize="none"
-        />
-        <TouchableOpacity onPress={this.onSubmit}>
-          <Text>Log in</Text>
-        </TouchableOpacity>
+        <View styles={styles.container}>
+          <View styles={styles.form}>
+            <FormTextInput />
+            <FormTextInput />
+            <LoginButton />
+          </View>
+        </View>
       </KeyboardAvoidingView>
     );
   }
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: 'rgb(255,255,255)',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  logo: {
+    flex: 1,
+    width: '100%',
+    resizeMode: 'contain',
+    alignSelf: 'center',
+  },
+  form: {
+    flex: 1,
+    justifyContent: 'center',
+    width: '80%',
+  },
+});
 
 export default LoginScreen;
