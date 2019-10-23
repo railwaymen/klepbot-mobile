@@ -1,13 +1,18 @@
 import React from 'react';
 import {StyleSheet, TextInput} from 'react-native';
 
-class FormTextInput extends React.Component {
-  render() {
-    return (
-      <TextInput selectionColor={'rgb(30,144,255)'} style={styles.textInput} />
-    );
-  }
-}
+const FormTextInput = props => {
+  const {placeholder, inputValue, onChange} = props;
+  return (
+    <TextInput
+      selectionColor={'rgb(30,144,255)'}
+      style={styles.textInput}
+      placeholder={placeholder}
+      inputValue={inputValue}
+      onChangeText={onChange}
+    />
+  );
+};
 
 const styles = StyleSheet.create({
   textInput: {

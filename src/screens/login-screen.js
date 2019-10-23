@@ -1,7 +1,10 @@
 import React, {Component} from 'react';
-import {KeyboardAvoidingView, View, StyleSheet} from 'react-native';
+import {Image, KeyboardAvoidingView, View, StyleSheet} from 'react-native';
 import LoginButton from '../components/buttons/login-button';
 import FormTextInput from '../components/forms/form-text-input';
+import UsersService from '../services/users-service';
+import CurrentUser from '../helpers/current-user';
+import imageLogo from '../assets/images/klep_bot_logo.png';
 
 class LoginScreen extends Component {
   constructor(props) {
@@ -21,15 +24,37 @@ class LoginScreen extends Component {
     this.setState({password});
   };
 
+  onSubmit = async () => {
+    const {
+      state: {email, password},
+      props: {
+        navigation: {navigate},
+      },
+    } = this;
+
+    const user = await UsersService.signIn({email, password});
+    await CurrentUser.assign(user);
+
+    navigate('Home');
+  };
+
   render() {
+    const {email, password} = this.state;
     return (
-      <KeyboardAvoidingView>
-        <View styles={styles.container}>
-          <View styles={styles.form}>
-            <FormTextInput />
-            <FormTextInput />
-            <LoginButton />
-          </View>
+      <KeyboardAvoidingView style={styles.container}>
+        <Image source={imageLogo} style={styles.logo} />
+        <View style={styles.form}>
+          <FormTextInput
+            placeholder="Enter email"
+            onChange={this.onChangeEmail}
+            inputValue={email}
+          />
+          <FormTextInput
+            placeholder="Enter password"
+            onChange={this.onChangePassword}
+            inputValue={password}
+          />
+          <LoginButton onSubmit={this.onSubmit} />
         </View>
       </KeyboardAvoidingView>
     );

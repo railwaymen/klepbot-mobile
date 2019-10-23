@@ -1,18 +1,15 @@
 import React from 'react';
 import {StyleSheet, Text, TouchableOpacity} from 'react-native';
 
-class LoginButton extends React.Component {
-  render() {
-    const label = 'Login';
+const LoginButton = ({onSubmit}) => {
+  const label = 'Login';
 
-    return (
-      <TouchableOpacity style={styles.container}>
-        <Text style={styles.text}>{label}</Text>
-      </TouchableOpacity>
-    );
-  }
-}
-
+  return (
+    <TouchableOpacity style={styles.container} onPress={() => onSubmit()}>
+      <Text style={styles.text}>{label}</Text>
+    </TouchableOpacity>
+  );
+};
 const styles = StyleSheet.create({
   container: {
     width: '100%',
