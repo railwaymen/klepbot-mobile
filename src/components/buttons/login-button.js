@@ -5,7 +5,7 @@ const LoginButton = ({onSubmit}) => {
   const label = 'Login';
 
   return (
-    <TouchableOpacity style={styles.container} onPress={() => onSubmit()}>
+    <TouchableOpacity style={styles.container} onPress={onSubmit}>
       <Text style={styles.text}>{label}</Text>
     </TouchableOpacity>
   );

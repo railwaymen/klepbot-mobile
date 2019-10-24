@@ -1,7 +1,12 @@
 import React, {Component} from 'react';
-import {Image, KeyboardAvoidingView, View, StyleSheet} from 'react-native';
+import {
+  Image,
+  KeyboardAvoidingView,
+  View,
+  StyleSheet,
+  TextInput,
+} from 'react-native';
 import LoginButton from '../components/buttons/login-button';
-import FormTextInput from '../components/forms/form-text-input';
 import UsersService from '../services/users-service';
 import CurrentUser from '../helpers/current-user';
 import imageLogo from '../assets/images/klep_bot_logo.png';
@@ -44,15 +49,19 @@ class LoginScreen extends Component {
       <KeyboardAvoidingView style={styles.container}>
         <Image source={imageLogo} style={styles.logo} />
         <View style={styles.form}>
-          <FormTextInput
+          <TextInput
+            selectionColor={'rgb(30,144,255)'}
+            style={styles.textInput}
             placeholder="Enter email"
-            onChange={this.onChangeEmail}
             inputValue={email}
+            onChangeText={this.onChangeEmail}
           />
-          <FormTextInput
+          <TextInput
+            selectionColor={'rgb(30,144,255)'}
+            style={styles.textInput}
             placeholder="Enter password"
-            onChange={this.onChangePassword}
             inputValue={password}
+            onChangeText={this.onChangePassword}
           />
           <LoginButton onSubmit={this.onSubmit} />
         </View>
@@ -78,6 +87,12 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     width: '80%',
+  },
+  textInput: {
+    height: 40,
+    borderColor: 'rgb(192,192,192)',
+    borderBottomWidth: StyleSheet.hairlineWidth,
+    marginBottom: 20,
   },
 });
 
