@@ -14,7 +14,7 @@ class UsersService {
     // }).then((attributes) => {
     //   return new UserModel(attributes);
     // })
-    if (email === 'admin@example.com' || password === 'password') {
+    if (email === 'admin@example.com' || password === 'password1') {
       return new UserModel({
         authentication_token: 'siemanko',
         id: 1,
