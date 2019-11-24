@@ -55,6 +55,11 @@ class LoginScreen extends Component {
             placeholder="Enter email"
             inputValue={email}
             onChangeText={this.onChangeEmail}
+            autoCompleteType="off"
+            keyboardType="email-address"
+            textContentType="emailAddress"
+            autoCapitalize="none"
+            autoCorrect={false}
           />
           <TextInput
             selectionColor={'rgb(30,144,255)'}
@@ -62,6 +67,8 @@ class LoginScreen extends Component {
             placeholder="Enter password"
             inputValue={password}
             onChangeText={this.onChangePassword}
+            autoCompleteType="password"
+            secureTextEntry={true}
           />
           <LoginButton onSubmit={this.onSubmit} />
         </View>
