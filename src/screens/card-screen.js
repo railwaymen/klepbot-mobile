@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
-import {View, Text} from 'react-native';
-import Button from '../components/shared/button';
+import {View, Text, TouchableOpacity} from 'react-native';
 import CardModel from '../models/card-model';
 import {Header2} from '../components/shared/header';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -112,20 +111,42 @@ class CardScreen extends Component {
           </View>
         </View>
         <View style={styles.actionContainer}>
-          {id ? (
-            <>
-              <Button style={styles.button} onPress={this.onMoveToContactPress}>
-                Add to contacts
-              </Button>
-              <Button style={styles.button} onPress={this.onEditPress}>
-                Edit
-              </Button>
-            </>
-          ) : null}
+          <CardActions />
         </View>
       </View>
     );
   }
+}
+
+// {id ? (
+//   <>
+//     <Button style={styles.button} onPress={this.onMoveToContactPress}>
+//       Add to contacts
+//     </Button>
+//     <Button style={styles.button} onPress={this.onEditPress}>
+//       Edit
+//     </Button>
+//   </>
+// ) : null}
+
+function CardActions() {
+
+  return (
+    <View style={{flexDirection: 'row'}}>
+      <TouchableOpacity style={{alignItems: 'center', justifyContent: 'center'}}>
+        <Icon name="ios-settings" size={26} />
+        <Text>Edit</Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={{alignItems: 'center', justifyContent: 'center'}}>
+        <Icon name="md-person-add" size={26} />
+        <Text>Move to contact</Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={{alignItems: 'center', justifyContent: 'center'}}>
+        <Icon name="ios-image" size={26} />
+        <Text>Show Image</Text>
+      </TouchableOpacity>
+    </View>
+  );
 }
 
 const styles = {
