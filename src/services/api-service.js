@@ -1,10 +1,8 @@
 import NetInfo from '@react-native-community/netinfo';
 
-const DEFAULT_API_URL = 'http://localhost:3000/';
-const DEFAULT_URL = 'http://locahost:3000';
-const HEADER_TOKEN_NAME = 'Token';
+import {DEFAULT_API_URL} from 'react-native-dotenv';
 
-export {DEFAULT_URL};
+const HEADER_TOKEN_NAME = 'Token';
 
 async function connect() {
   const connection = await NetInfo.fetch();

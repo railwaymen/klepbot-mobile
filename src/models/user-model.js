@@ -1,4 +1,4 @@
-import {DEFAULT_URL} from '../services/api-service';
+import {DEFAULT_URL} from 'react-native-dotenv';
 import DataPeriodModel from './data-period-model';
 
 class UserModel {
