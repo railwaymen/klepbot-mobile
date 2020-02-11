@@ -1,18 +1,51 @@
-import React from 'react';
+import React, {Component} from 'react';
 import {View} from 'react-native';
-
+import {Header2} from '../components/shared/header';
 import CurrentUser from '../helpers/current-user';
+import {colorPalette} from '../shared/styles';
 
-class HomeScreen extends React.Component {
-  componentDidMount = () => {
-    CurrentUser.get().then(user => {
-      const {navigate} = this.props.navigation;
-
-      user.token ? navigate('Main') : navigate('Login');
-    });
+class HomeScreen extends Component {
+  state = {
+    user: {},
   };
 
-  render = () => <View />;
+  onTabSelect = tab => {
+    const {navigate} = this.props.navigation;
+
+    navigate(tab);
+  };
+
+  componentDidMount() {
+    CurrentUser.get().then(user => {
+      this.setState({user});
+    });
+  }
+
+  render() {
+    const {firstName} = this.state.user;
+
+    return (
+      <View style={styles.container}>
+        <Header2>Hello {firstName}</Header2>
+      </View>
+    );
+  }
 }
+
+const styles = {
+  container: {
+    backgroundColor: colorPalette.backgroundColor,
+    flex: 1,
+    padding: 12,
+  },
+  header: {
+    fontSize: 24,
+    padding: 12,
+  },
+  scrollContainer: {
+    flex: 1,
+    marginTop: 20,
+  },
+};
 
 export default HomeScreen;

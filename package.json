@@ -10,12 +10,23 @@
     "lint": "eslint ."
   },
   "dependencies": {
+    "@react-native-community/async-storage": "^1.7.1",
+    "@react-native-community/datetimepicker": "^2.1.0",
+    "@react-native-community/netinfo": "^5.0.0",
+    "prop-types": "^15.7.2",
     "react": "16.9.0",
     "react-native": "0.61.2",
     "react-native-camera": "^3.8.0",
+    "react-native-chart-kit": "^4.3.0",
+    "react-native-dotenv": "^0.2.0",
+    "react-native-firebase": "^5.6.0",
     "react-native-gesture-handler": "^1.4.1",
+    "react-native-linear-gradient": "^2.5.6",
     "react-native-reanimated": "^1.3.0",
     "react-native-screens": "^1.0.0-alpha.23",
+    "react-native-svg": "^10.0.0",
+    "react-native-timezone": "^1.0.3",
+    "react-native-vector-icons": "^6.6.0",
     "react-navigation": "^4.0.10",
     "react-navigation-stack": "^1.9.4",
     "react-navigation-tabs": "^2.5.6"

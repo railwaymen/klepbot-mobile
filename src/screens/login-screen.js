@@ -1,15 +1,10 @@
 import React, {Component} from 'react';
-import {
-  Image,
-  KeyboardAvoidingView,
-  View,
-  StyleSheet,
-  TextInput,
-} from 'react-native';
-import LoginButton from '../components/buttons/login-button';
+import {KeyboardAvoidingView, View, TextInput, Text} from 'react-native';
+import Button from '../components/shared/button';
 import UsersService from '../services/users-service';
 import CurrentUser from '../helpers/current-user';
-import imageLogo from '../assets/images/klep_bot_logo.png';
+import LinearGradient from 'react-native-linear-gradient';
+import {colors} from '../shared/styles';
 
 class LoginScreen extends Component {
   constructor(props) {
@@ -40,60 +35,88 @@ class LoginScreen extends Component {
     const user = await UsersService.signIn({email, password});
     await CurrentUser.assign(user);
 
-    navigate('Home');
+    navigate('Main');
   };
 
   render() {
     const {email, password} = this.state;
+
     return (
-      <KeyboardAvoidingView style={styles.container}>
-        <Image source={imageLogo} style={styles.logo} />
-        <View style={styles.form}>
-          <TextInput
-            selectionColor={'rgb(30,144,255)'}
-            style={styles.textInput}
-            placeholder="Enter email"
-            inputValue={email}
-            onChangeText={this.onChangeEmail}
-          />
-          <TextInput
-            selectionColor={'rgb(30,144,255)'}
-            style={styles.textInput}
-            placeholder="Enter password"
-            inputValue={password}
-            onChangeText={this.onChangePassword}
-          />
-          <LoginButton onSubmit={this.onSubmit} />
-        </View>
-      </KeyboardAvoidingView>
+      <LinearGradient
+        start={{x: 0, y: -1}}
+        end={{x: 1, y: 1}}
+        colors={colors}
+        style={styles.gradientBackground}>
+        <KeyboardAvoidingView behavior="padding" style={styles.container}>
+          <Text style={styles.header}>Klepbot</Text>
+          <View style={styles.form}>
+            <TextInput
+              selectionColor={'rgb(30,144,255)'}
+              autoCompleteType="email"
+              keyboardType="email-address"
+              autoCorrect={false}
+              autoCapitalize="none"
+              style={styles.input}
+              placeholder="Enter email"
+              inputValue={email}
+              onChangeText={this.onChangeEmail}
+              placeholderTextColor={'#eaeaea'}
+            />
+            <TextInput
+              selectionColor={'rgb(30,144,255)'}
+              autoCompleteType="password"
+              secureTextEntry={true}
+              style={styles.input}
+              placeholder="Enter password"
+              inputValue={password}
+              onChangeText={this.onChangePassword}
+              placeholderTextColor={'#eaeaea'}
+            />
+            <Button style={styles.button} onPress={this.onSubmit}>
+              Log in
+            </Button>
+          </View>
+        </KeyboardAvoidingView>
+      </LinearGradient>
     );
   }
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: 'rgb(255,255,255)',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-  },
-  logo: {
-    flex: 1,
-    width: '100%',
-    resizeMode: 'contain',
-    alignSelf: 'center',
-  },
-  form: {
+const styles = {
+  gradientBackground: {
     flex: 1,
     justifyContent: 'center',
-    width: '80%',
   },
-  textInput: {
-    height: 40,
-    borderColor: 'rgb(192,192,192)',
-    borderBottomWidth: StyleSheet.hairlineWidth,
-    marginBottom: 20,
+  header: {
+    textAlign: 'center',
+    fontSize: 64,
+    color: '#fff',
+    fontFamily: 'DancingScript-Regular',
   },
-});
+  button: {
+    backgroundColor: 'transparent',
+    borderWidth: 0.5,
+    borderColor: 'rgba(255,255,255,0.5)',
+    borderRadius: 6,
+    color: '#eaeaea',
+    fontSize: 16,
+  },
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    flexDirection: 'column',
+  },
+  form: {
+    padding: 24,
+    justifyContent: 'center',
+  },
+  input: {
+    backgroundColor: 'rgba(255,255,255,0.1)',
+    color: '#eaeaea',
+    borderRadius: 6,
+    marginBottom: 12,
+    padding: 15,
+  },
+};
 
 export default LoginScreen;

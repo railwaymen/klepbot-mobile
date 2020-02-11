@@ -1,27 +1,36 @@
-//import ApiService from './api-service';
+import ApiService from './api-service';
 import UserModel from '../models/user-model';
 
 class UsersService {
   static async signIn({email, password}) {
-    // const body = {
-    //   email,
-    //   password,
-    // }
+    return ApiService.post({
+      url: 'users/sign_in',
+      body: JSON.stringify({user: {email, password}}),
+    }).then(attributes => {
+      return new UserModel(attributes);
+    });
+  }
 
-    // return ApiService.post({
-    //   url: 'authentications',
-    //   body: JSON.stringify(body),
-    // }).then((attributes) => {
-    //   return new UserModel(attributes);
-    // })
-    if (email === 'admin@example.com' || password === 'password1') {
-      return new UserModel({
-        authentication_token: 'siemanko',
-        id: 1,
-        email: email,
-      });
-    }
-    return new UserModel({});
+  static all() {
+    return ApiService.get({
+      url: 'users',
+    }).then(users => users.map(user => new UserModel(user)));
+  }
+
+  static currentUser() {
+    return ApiService.get({
+      url: 'profile',
+    }).then(user => new UserModel(user));
+  }
+
+  static async currentUserUpdate(params) {
+    return ApiService.put({
+      url: 'profile',
+      body: params,
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    }).then(user => new UserModel(user));
   }
 }
 
