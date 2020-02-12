@@ -13,8 +13,8 @@ export function Header3({style = {}, children}) {
   return <Text style={[header3, style]}>{children}</Text>;
 }
 
-export function HeaderTitle({children}) {
-  return <Text style={headerTitleText}>{children}</Text>;
+export function HeaderTitle({children, style}) {
+  return <Text style={[headerTitleText, style]}>{children}</Text>;
 }
 
 const headerTitleText = {

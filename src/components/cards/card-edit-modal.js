@@ -3,10 +3,12 @@ import {View, ScrollView, Text, Animated, StatusBar} from 'react-native';
 import TextInputGroup from '../shared/text-input-group';
 import {colorPalette} from '../../shared/styles';
 import ModalHeader from '../shared/modal-header';
-import {Header2, HeaderTitle} from '../shared/header';
+import {Header2, HeaderTitle, Header3} from '../shared/header';
 import Button from '../shared/button';
 import MountedModal from '../shared/mounted-modal';
 import PossibleNames from './card-possible-names';
+import { TextInput } from 'react-native-gesture-handler';
+import GradientButton from '../shared/gradient-button';
 
 export default class CardEditModal extends Component {
   constructor(props) {
@@ -70,9 +72,9 @@ export default class CardEditModal extends Component {
           <StatusBar hidden={false} />
           <ModalHeader onSave={this.onSubmit} onCancel={close} />
           <View style={styles.header}>
-            <Header2>
+            <Header3>
               {firstName} {lastName}
-            </Header2>
+            </Header3>
           </View>
           <PossibleNames
             onPress={this.onSelectName}
@@ -113,7 +115,8 @@ export default class CardEditModal extends Component {
             />
             {showMetadata ? <Metadata data={metadata} /> : null}
           </ScrollView>
-          <Button onPress={this.onToggleMetadata}>Show metadata</Button>
+          <GradientButton style={{marginBottom: 5}} onPress={this.onToggleMetadata}>Show metadata</GradientButton>
+          <GradientButton onPress={this.onToggleMetadata}>Show image</GradientButton>
         </View>
       </MountedModal>
     );
@@ -131,7 +134,12 @@ function Metadata({data}) {
   return (
     <Animated.View style={{height: resizeHeight}}>
       <HeaderTitle>Metadata</HeaderTitle>
-      <Text style={styles.metadataText}>{data}</Text>
+      <TextInput
+        editable={false}
+        multiline={true}
+        style={styles.metadataText}>
+        {data}
+      </TextInput>
     </Animated.View>
   );
 }
@@ -156,5 +164,6 @@ const styles = {
   },
   metadataText: {
     color: '#0c0c0c',
+    height: '100%',
   },
 };
