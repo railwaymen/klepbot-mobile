@@ -111,7 +111,10 @@ class CardScreen extends Component {
           </View>
         </View>
         <View style={styles.actionContainer}>
-          <CardActions />
+          <CardActions
+            moveToContact={this.onMoveToContactPress}
+            edit={this.onEditPress}
+          />
         </View>
       </View>
     );
@@ -129,25 +132,60 @@ class CardScreen extends Component {
 //   </>
 // ) : null}
 
-function CardActions() {
-
+function CardActions({moveToContact, edit}) {
   return (
-    <View style={{flexDirection: 'row'}}>
-      <TouchableOpacity style={{alignItems: 'center', justifyContent: 'center'}}>
-        <Icon name="ios-settings" size={26} />
-        <Text>Edit</Text>
+    <View style={actionStyles.container}>
+      <TouchableOpacity style={actionStyles.item} onPress={edit}>
+        <View style={actionStyles.icon}>
+          <Icon name="ios-settings" color={color} size={26} />
+        </View>
+        <Text style={actionStyles.itemText}>Edit</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={{alignItems: 'center', justifyContent: 'center'}}>
-        <Icon name="md-person-add" size={26} />
-        <Text>Move to contact</Text>
+      <TouchableOpacity style={actionStyles.item} onPress={moveToContact}>
+        <View style={actionStyles.icon}>
+          <Icon name="md-person-add" color={color} size={26} />
+        </View>
+        <Text style={actionStyles.itemText}>Move to contact</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={{alignItems: 'center', justifyContent: 'center'}}>
-        <Icon name="ios-image" size={26} />
-        <Text>Show Image</Text>
+      <TouchableOpacity style={actionStyles.item}>
+        <View style={actionStyles.icon}>
+          <Icon name="ios-image" color={color} size={26} />
+        </View>
+        <Text style={actionStyles.itemText}>Show Image</Text>
       </TouchableOpacity>
     </View>
   );
 }
+
+const color = '#444';
+
+const actionStyles = {
+  container: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  item: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginLeft: 15,
+    marginRight: 15,
+  },
+  itemText: {
+    fontSize: 11,
+    color: color,
+  },
+  icon: {
+    borderWidth: 1,
+    borderColor: '#777',
+    padding: 15,
+    width: 64,
+    height: 64,
+    borderRadius: 32,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 5,
+  },
+};
 
 const styles = {
   container: {
