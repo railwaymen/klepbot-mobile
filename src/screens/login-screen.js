@@ -5,6 +5,7 @@ import UsersService from '../services/users-service';
 import CurrentUser from '../helpers/current-user';
 import LinearGradient from 'react-native-linear-gradient';
 import {colors} from '../shared/styles';
+import FullScreenLoader from '../components/shared/full-screen-loader';
 
 class LoginScreen extends Component {
   constructor(props) {
@@ -13,6 +14,7 @@ class LoginScreen extends Component {
     this.state = {
       email: '',
       passowd: '',
+      isLoading: false,
     };
   }
 
@@ -25,6 +27,8 @@ class LoginScreen extends Component {
   };
 
   onSubmit = async () => {
+    this.setState({isLoading: true});
+
     const {
       state: {email, password},
       props: {
@@ -32,52 +36,57 @@ class LoginScreen extends Component {
       },
     } = this;
 
-    const user = await UsersService.signIn({email, password});
-    await CurrentUser.assign(user);
-
-    navigate('Main');
+    UsersService.signIn({email, password}).then(user => {
+      CurrentUser.assign(user);
+      navigate('Main');
+    }).catch(() => {
+      this.setState({isLoading: false});
+    });
   };
 
   render() {
-    const {email, password} = this.state;
+    const {email, password, isLoading} = this.state;
 
     return (
-      <LinearGradient
-        start={{x: 0, y: -1}}
-        end={{x: 1, y: 1}}
-        colors={colors}
-        style={styles.gradientBackground}>
-        <KeyboardAvoidingView behavior="padding" style={styles.container}>
-          <Text style={styles.header}>Klepbot</Text>
-          <View style={styles.form}>
-            <TextInput
-              selectionColor={'rgb(30,144,255)'}
-              autoCompleteType="email"
-              keyboardType="email-address"
-              autoCorrect={false}
-              autoCapitalize="none"
-              style={styles.input}
-              placeholder="Enter email"
-              inputValue={email}
-              onChangeText={this.onChangeEmail}
-              placeholderTextColor={'#eaeaea'}
-            />
-            <TextInput
-              selectionColor={'rgb(30,144,255)'}
-              autoCompleteType="password"
-              secureTextEntry={true}
-              style={styles.input}
-              placeholder="Enter password"
-              inputValue={password}
-              onChangeText={this.onChangePassword}
-              placeholderTextColor={'#eaeaea'}
-            />
-            <Button style={styles.button} onPress={this.onSubmit}>
-              Log in
-            </Button>
-          </View>
-        </KeyboardAvoidingView>
-      </LinearGradient>
+      <>
+        <FullScreenLoader visible={isLoading} />
+        <LinearGradient
+          start={{x: 0, y: -1}}
+          end={{x: 1, y: 1}}
+          colors={colors}
+          style={styles.gradientBackground}>
+          <KeyboardAvoidingView behavior="padding" style={styles.container}>
+            <Text style={styles.header}>Klepbot</Text>
+            <View style={styles.form}>
+              <TextInput
+                selectionColor={'rgb(30,144,255)'}
+                autoCompleteType="email"
+                keyboardType="email-address"
+                autoCorrect={false}
+                autoCapitalize="none"
+                style={styles.input}
+                placeholder="Enter email"
+                inputValue={email}
+                onChangeText={this.onChangeEmail}
+                placeholderTextColor={'#eaeaea'}
+              />
+              <TextInput
+                selectionColor={'rgb(30,144,255)'}
+                autoCompleteType="password"
+                secureTextEntry={true}
+                style={styles.input}
+                placeholder="Enter password"
+                inputValue={password}
+                onChangeText={this.onChangePassword}
+                placeholderTextColor={'#eaeaea'}
+              />
+              <Button style={styles.button} onPress={this.onSubmit}>
+                Log in
+              </Button>
+            </View>
+          </KeyboardAvoidingView>
+        </LinearGradient>
+      </>
     );
   }
 }

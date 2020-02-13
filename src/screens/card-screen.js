@@ -11,6 +11,7 @@ import AlertsContext from '../contexts/alerts-context';
 import CardActions from '../components/cards/card-actions';
 import { BackButton } from '../components/shared/logo-top-bar';
 import GradientContainerShaped from '../components/shared/gradient-container-shaped';
+import ImageZoom from '../components/shared/image-zoom';
 
 class CardScreen extends Component {
   static navigationOptions = {
@@ -25,6 +26,7 @@ class CardScreen extends Component {
     card: new CardModel({}),
     displayEditModal: false,
     displayMoveToContactsModal: false,
+    displayImageModal: false,
   };
 
   componentDidMount() {
@@ -74,6 +76,10 @@ class CardScreen extends Component {
     this.setState(state => ({displayEditModal: !state.displayEditModal}));
   };
 
+  onShowImagePress = () => {
+    this.setState(state => ({displayImageModal: !state.displayImageModal}));
+  };
+
   onMoveToContactPress = () => {
     this.setState(state => ({
       displayMoveToContactsModal: !state.displayMoveToContactsModal,
@@ -84,8 +90,9 @@ class CardScreen extends Component {
     const {
       displayEditModal,
       displayMoveToContactsModal,
+      displayImageModal,
       card,
-      card: {firstName, lastName, email, phoneNumbers, websites},
+      card: {firstName, lastName, email, phoneNumbers, websites, imageUrl},
     } = this.state;
 
     return (
@@ -119,9 +126,16 @@ class CardScreen extends Component {
               close={this.onMoveToContactPress}
             />
           ) : null}
+          { displayImageModal ? (
+            <ImageZoom
+              onClose={this.onShowImagePress}
+              src={imageUrl}
+            />
+          ) : null}
           <CardActions
             moveToContact={this.onMoveToContactPress}
             edit={this.onEditPress}
+            showImage={this.onShowImagePress}
           />
         </View>
       </>

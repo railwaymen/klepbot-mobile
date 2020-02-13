@@ -20,7 +20,7 @@ class UserModel {
     this.lastName = last_name;
     this.email = email;
     this.token = token;
-    this.avatarUrl = `${DEFAULT_URL}/temp-image.png`;
+    this.avatarUrl = `${DEFAULT_URL}/${avatar_url}` || `${DEFAULT_URL}/temp-image.png`;
     this.color = color || '#FF9A7B';
     this.signature = signature;
 

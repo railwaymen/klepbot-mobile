@@ -1,5 +1,6 @@
 import CardsService from '../services/cards-service';
 import ContactModel from './contact-model';
+import {DEFAULT_URL} from 'react-native-dotenv';
 
 class CardModel {
   constructor({
@@ -12,6 +13,7 @@ class CardModel {
     phone_numbers,
     websites,
     possible_names,
+    image_url,
   }) {
     this.id = id;
     this.firstName = first_name || '';
@@ -22,6 +24,7 @@ class CardModel {
     this.phoneNumbers = phone_numbers;
     this.websites = websites;
     this.possibleNames = possible_names || [];
+    this.imageUrl = `${DEFAULT_URL}${image_url}`;
   }
 
   assignAttributes = attributes => {

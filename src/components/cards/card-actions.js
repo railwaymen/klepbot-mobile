@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import {View, Text, TouchableOpacity, Animated} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
-export default function CardActions({moveToContact, edit}) {
+export default function CardActions({moveToContact, edit, showImage}) {
   const [marginAnim] = useState(new Animated.Value(245));
   const [opacityAnim] = useState(new Animated.Value(0));
 
@@ -33,7 +33,7 @@ export default function CardActions({moveToContact, edit}) {
         </View>
         <Text style={actionStyles.itemText}>Move to contact</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={actionStyles.item}>
+      <TouchableOpacity style={actionStyles.item} onPress={showImage}>
         <View style={actionStyles.icon}>
           <Icon name="ios-image" color={color} size={26} />
         </View>

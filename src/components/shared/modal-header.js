@@ -2,9 +2,9 @@ import React from 'react';
 import {View, TouchableOpacity} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
-export default function ModalHeader({onSave, onCancel, children}) {
+export default function ModalHeader({onSave, onCancel, children, style = {}}) {
   return (
-    <View style={styles.header}>
+    <View style={[styles.header, style]}>
       <TouchableOpacity style={styles.button} onPress={onCancel}>
         <Icon style={styles.icon} name="ios-close" size={26} />
       </TouchableOpacity>
