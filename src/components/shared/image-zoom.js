@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import {View, Text, Image, Modal, Animated} from 'react-native';
+import {View, Text, Image, Modal, Animated, PanResponder} from 'react-native';
 import ModalHeader from './modal-header';
 import FullScreenLoader from './full-screen-loader';
 
 export default function ImageZoom({onClose, src, name = 'Image Preview'}) {
   const [backgroundAlpha] = useState(new Animated.Value(0));
   const [isImageLoaded, setIsImageLoaded] = useState(false);
+  const [panPosition] = useState(new Animated.ValueXY());
 
   useEffect(() => {
     Animated.timing(backgroundAlpha, {
@@ -14,6 +15,22 @@ export default function ImageZoom({onClose, src, name = 'Image Preview'}) {
     }).start();
   }, []);
 
+  useEffect(() => {
+    alert(panPosition.x);
+    if (panPosition.x < 500) {
+      alert()
+    }
+  }, panPosition)
+
+  const panResponser = panResponderGesturesImage(panPosition);
+
+  const panStyles = {
+    transform: [
+      {translateX: panPosition.x},
+      {translateY: panPosition.y},
+    ]
+  }
+
   return (
     <Modal transparent={true}>
       <Animated.View style={[styles.zoomContainer, {opacity: backgroundAlpha}]}>
@@ -21,16 +38,37 @@ export default function ImageZoom({onClose, src, name = 'Image Preview'}) {
           <Text>{name}</Text>
         </ModalHeader>
         <FullScreenLoader visible={!isImageLoaded} />
-        <View style={styles.imageContainer}>
+        <Animated.View
+          style={[styles.imageContainer, panStyles]}
+          {...panResponser.panHandlers}
+        >
           <Image
             source={{uri: src}}
             style={styles.image}
             onLoad={() => setIsImageLoaded(true)}
           />
-        </View>
+        </Animated.View>
       </Animated.View>
     </Modal>
   )
+}
+
+const panResponderGesturesImage = (xyHandler) => {
+  return PanResponder.create({
+    onStartShouldSetPanResponder: (evt, gestureState) => true,
+    onStartShouldSetPanResponderCapture: (evt, gestureState) => true,
+    onMoveShouldSetPanResponder: (evt, gestureState) => true,
+    onMoveShouldSetPanResponderCapture: (evt, gestureState) => true,
+    onPanResponderGrant: (e, gestureState) => {
+      xyHandler.setValue({x: 0, y: 0});
+    },
+    onPanResponderMove: Animated.event([
+      null, {dx: xyHandler.x, dy: xyHandler.y}
+    ]),
+    onPanResponderRelease: (e, {vx, vy}) => {
+      xyHandler.setValue({x: vx, y: vy});
+    }
+  });
 }
 
 const styles = {
